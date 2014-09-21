@@ -6,7 +6,7 @@
 * National University of Defense Technology
 * All rights reserved.	
 *
-* Authors: Bo Ding 
+* Authors: Bo Ding
 * Last modified date: 2014-09-17
 *
 * Redistribution and use in source and binary forms, with or without
@@ -35,41 +35,59 @@
 *
 */
 
-#include "ros/ros.h"
-#include "std_msgs/String.h"
+#ifndef _DDSBROKER_
+#define _DDSBROKER_
 
-#include <sstream>
+#include "forwards.h"
+#include "common.h"
+#include "ccpp_dds_dcps.h"
+#include "qos_options.h"
+#include <map>
 
-int main(int argc, char **argv)
+#include <boost/thread/mutex.hpp>
+
+using namespace DDS;
+
+namespace ROSDDS
 {
-  ros::init(argc, argv, "talker");
+class DDSBroker;
+typedef boost::shared_ptr<DDSBroker> DDSBrokerPtr;
 
-  ros::NodeHandle n;
+class DDSBroker
+{
+  DomainParticipantFactory_var dpf;
+  DomainParticipant_var participant;
+  Publisher_var publisher;
+  Subscriber_var subscriber;
 
-  ros::Publisher chatter_pub;
+  TopicQos reliable_topic_qos;
 
-  chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  std::map<std::string, Topic_var> topic_map;
+  std::map<std::string, DataWriter_var> writer_map;
+  std::map<std::string, DataReader_var> reader_map;
 
-  ros::Rate loop_rate(100);
+  DomainId_t domain;
+  DDS::String_var typeName;
 
-  int count = 0;
-  while (ros::ok())
-  {
-    std_msgs::String msg;
+  boost::mutex topic_map_mutex;
+  boost::mutex writer_map_mutex;
+  boost::mutex reader_map_mutex;
 
-    std::stringstream ss;
-    ss << "hello world " << count;
-    msg.data = ss.str();
+  Topic_var getTopic(const std::string& topicName);
+  DataWriter_var getWriter(std::string topicName);
+  DataReader_var getReader(std::string topicName);
 
-    ROS_INFO("%s", msg.data.c_str());
-    chatter_pub.publish(msg);
+public:
+  DDSBroker();
+  ~DDSBroker();
 
-    ros::spinOnce();
-    loop_rate.sleep();
+  static const DDSBrokerPtr& instance();
+  bool createReader(std::string topicName, const ros::SubscribeQoSOptions& qos_ops);
+  bool createWriter(std::string topicName, bool latch, const ros::AdvertiseQoSOptions& qos_ops);
+  bool publishMsg(std::string topicName, const ros::SerializedMessage& message);
+  bool setListener(std::string topicName, DDS::DataReaderListener_var listener);
+};
 
-    ++count;
-  }
-
-
-  return 0;
 }
+
+#endif
