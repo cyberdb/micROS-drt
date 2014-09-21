@@ -1,61 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>micrROS rt by cyberdb</title>
+    <meta name="description" content="micrROS rt : ">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <title>micrROS rt</title>
   </head>
-  <body>
-    <div class="wrapper">
-      <header class="without-description">
-        <h1>micrROS rt</h1>
-        <p></p>
-        <p class="view"><a href="https://github.com/cyberdb/micROS-RT">View the Project on GitHub <small>cyberdb/micROS-RT</small></a></p>
-        <ul>
-          <li><a href="https://github.com/cyberdb/micROS-RT/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/cyberdb/micROS-RT/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/cyberdb/micROS-RT">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p>Part I What is micROS RT ? Why micROS-RT</p>
 
-<p>MicROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Systems for Realtime Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (<a href="http://portals.omg.org/dds/">http://portals.omg.org/dds/</a>). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. </p>
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/cyberdb/micROS-RT">View on GitHub</a>
+
+          <h1 id="project_title">micrROS rt</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/cyberdb/micROS-RT/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/cyberdb/micROS-RT/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>MicROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Systems for Realtime Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (<a href="http://portals.omg.org/dds/">http://portals.omg.org/dds/</a>). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. </p>
 
 <p>By replacing the original ROS message protocols (TCPROS &amp; UDPROS) with DDS, we can support a set of advanced features in ROS message delivery process, such as UDP-based multicast and setting the QoS properties (transport priority, latency budget, etc.) of a specific topic. In concrete, we can achieve the benefits as follows.</p>
 
-<p>General benefits 
-(1) Multicast in message delivery. The DDS middleware will automatically select the multicast protocol when necessary. Therefore, when there are n listeners in a topic (n&gt;=2), you can achieve significant performance benefit.
-(2) Robustness in unexpected settings.  Since DDS is a mature and industry-level message delivery system, it is behaves better in various complex communications settings. For example, it has better reconnection behavior when dropping out of wireless.</p>
+<p><strong>General benefits</strong></p>
 
-<p>QoS-related benefits
-(1) Transport priority and latency budget of a topic. With micROS RT, you can specify the transport priority and latency budget of a topic. It is useful in many real-time settings, such as multi-robot collaboration with limited wireless network bandwidth.
-(2) Expected message arriving deadline. With micROS RT, you can set the expected message arriving period as well as the behavior when a message not arriving in this period. It is also useful in real-time settings.
-(3) Time-based message filter. You can filter unnecessary messages based on time properties. For example, if you need only update the state of a sensor per minute, you can ignore other redundant messages by simply setting a property while you subscribing the topic.
-(4) Other QoS-related features. With micROS RT, you can specify other QoS-related properties provided by the underlying DDS middleware in a simplified way when advertising/subscribing a topic, such as reliability of message delivery, data-centric update, message order method, and message valid period.</p>
+<p>(1) <strong>Multicast in message delivery</strong>. The DDS middleware will automatically select the multicast protocol when necessary. Therefore, when there are n listeners in a topic (n&gt;=2), you can achieve significant performance benefit.</p>
 
-<p>Compatibility
-(1) Existing ROS packages need no modification. Existing ROS packages can easily benefit from DDS by simply replacing the libroscpp.so in the ROS installation directory. Those packages needs no modification and re-compilation.
-(2) Existing ROS programming paradigm is kept. Existing ROS programming paradigm is kept, except for several new APIs to set topic QoS are added.
-(3) Interoperable with official ROS kernel. The micROS RT can smartly choose appropriate protocol when it communicate with a official C++ or Python ROS kernel. The preferred protocol of a topic can also be specified when advertising it.</p>
+<p>(2) <strong>Robustness in unexpected settings</strong>.  Since DDS is a mature and industry-level message delivery system, it is behaves better in various complex communications settings. For example, it has better reconnection behavior when dropping out of wireless.</p>
+
+<p><strong>QoS-assurance in message delivery</strong></p>
+
+<p>(1) <strong>Transport priority and latency budget of a topic</strong>. With micROS RT, you can specify the transport priority and latency budget of a topic. It is useful in many real-time settings, such as multi-robot collaboration with limited wireless network bandwidth.</p>
+
+<p>(2) <strong>Expected message arriving deadline</strong>. With micROS RT, you can set the expected message arriving period as well as the behavior when a message not arriving in this period. It is also useful in real-time settings.</p>
+
+<p>(3) <strong>Time-based message filter</strong>. You can filter unnecessary messages based on time properties. For example, if you need only update the state of a sensor per minute, you can ignore other redundant messages by simply setting a property while you subscribing the topic.</p>
+
+<p>(4) <strong>Other QoS-related features</strong>. With micROS RT, you can specify other QoS-related properties provided by the underlying DDS middleware in a simplified way when advertising/subscribing a topic, such as reliability of message delivery, data-centric update, message order method, and message valid period.</p>
+
+<p><strong>Compatibility</strong></p>
+
+<p>(1) <strong>Existing ROS packages need no modification</strong>. Existing ROS packages can easily benefit from DDS by simply replacing the libroscpp.so in the ROS installation directory. Those packages needs no modification and re-compilation.</p>
+
+<p>(2) <strong>Existing ROS programming paradigm is kept</strong>. Existing ROS programming paradigm is kept, except for several new APIs to set topic QoS are added.</p>
+
+<p>(3) <strong>Interoperable with official ROS kernel</strong>. The micROS RT can smartly choose appropriate protocol when it communicate with a official C++ or Python ROS kernel. The preferred protocol of a topic can also be specified when advertising it.</p>
 
 <p>In fact, the ROS official has also the plan to integrate ROS 2.0, the next generation of ROS, with DDS (<a href="http://design.ros2.org/articles/ros_on_dds.html">http://design.ros2.org/articles/ros_on_dds.html</a>). The major difference between micROS RT and future ROS 2.0 includes: (1) We keeps compatibility with existing ROS 1.x package and programming paradigm, because we believe that protecting the existing investment should be important to the ROS community. (2) We lays strong emphasis on exploiting the QoS-features of the underlying DDS middleware, because we believe that it should be important to multi-node and multi-robot applications.</p>
       </section>
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/cyberdb">cyberdb</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">micrROS rt maintained by <a href="https://github.com/cyberdb">cyberdb</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
