@@ -1,42 +1,33 @@
 <!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>micROS RT by cyberdb</title>
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <title>micROS RT</title>
-  <meta name="description" content="an implementation of ROS 1.x on DDS">
-
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-</head>
-
-<body>
-
-  <div class="wrapper">
-    <header>
-      <h1 class="title">micROS RT</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">an implementation of ROS 1.x on DDS</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/cyberdb/micROS-RT/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/cyberdb/micROS-RT/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/cyberdb/micROS-RT" class="code">View micROS RT on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <p>Please contact us through <a href="mailto:bding@msn.com">bding@msn.com</a>. Any feedback would be greatly appreciated!</p>
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>micROS RT</h1>
+        <p>an implementation of ROS 1.x on DDS</p>
+        <p class="view"><a href="https://github.com/cyberdb/micROS-RT">View the Project on GitHub <small>cyberdb/micROS-RT</small></a></p>
+        <ul>
+          <li><a href="https://github.com/cyberdb/micROS-RT/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cyberdb/micROS-RT/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cyberdb/micROS-RT">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Please contact us through <a href="mailto:bding@msn.com">bding@msn.com</a>. Any feedback would be greatly appreciated!</p>
 
 <p>More information can be found in the user's manual of micROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>) and our website <a href="http://micros.nudt.edu.cn/">http://micros.nudt.edu.cn/</a></p>
 
@@ -59,7 +50,7 @@
 <p>Currently, micROS RT is modified based on ROS Indigo. However, the version modified based on ROS Hydro will be provided soon. You can install micROS RT in two different ways: binary library or source code.</p>
 
 <h3>
-<a name="installation-from-binary-library" class="anchor" href="#installation-from-binary-library"><span class="octicon octicon-link"></span></a>Installation from binary library</h3>
+<a name="installing-from-binary-library" class="anchor" href="#installing-from-binary-library"><span class="octicon octicon-link"></span></a>Installing from binary library</h3>
 
 <p>Step1: Replacing official ROS C++ Kernel with micROS RT</p>
 
@@ -78,7 +69,7 @@
 <p>(6) If you want to use micROS-RT newly added APIs in you program, please download the micROS-RT header files from <a href="https://github.com/cyberdb/micROS-RT/blob/master/lib/include.indigo.tar.gz">here</a> (by pressing the “raw” button)  and extract them into the %ROSInstallationPath%/include/ros directory (usually /opt/indigo/include/ros). You will be prompted that several files are replaced.</p>
 
 <h3>
-<a name="installation-from-source-code" class="anchor" href="#installation-from-source-code"><span class="octicon octicon-link"></span></a>Installation from source code</h3>
+<a name="installing-from-source-code" class="anchor" href="#installing-from-source-code"><span class="octicon octicon-link"></span></a>Installing from source code</h3>
 
 <p>(1) Installing ROS Indigo from source code (<a href="http://wiki.ros.org/indigo/Installation/Source">http://wiki.ros.org/indigo/Installation/Source</a>)</p>
 
@@ -98,26 +89,13 @@
 <p>See the user's manual of MmcROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>).</p>
 
 <p>Please contact us through <a href="mailto:bding@msn.com">bding@msn.com</a>. Any feedback would be greatly appreciated!</p>
-        </article>
-      </div>
+      </section>
     </div>
     <footer>
-      <div class="owner">
-      <p><a href="https://github.com/cyberdb" class="avatar"><img src="https://avatars3.githubusercontent.com/u/8655447?v=2&amp;s=60" width="48" height="48"></a> <a href="https://github.com/cyberdb">cyberdb</a> maintains <a href="https://github.com/cyberdb/micROS-RT">micROS RT</a></p>
-
-
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="http://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
+      <p>Project maintained by <a href="https://github.com/cyberdb">cyberdb</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
     </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/cyberdb/micROS-RT/tarball/master" class="tar">tar</a><a href="https://github.com/cyberdb/micROS-RT/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
-
-  
-</body>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
 </html>
