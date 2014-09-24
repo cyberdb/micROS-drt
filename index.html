@@ -36,9 +36,9 @@
 
 <p>micROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Systems for Realtime Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (<a href="http://portals.omg.org/dds/">http://portals.omg.org/dds/</a>). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. By replacing the original ROS message protocols (TCPROS &amp; UDPROS) with DDS, a set of advanced features can be supported in the ROS message delivery process.</p>
 
-<p>(1) <strong>Enabling multi-cast</strong>. When there are <em>n</em> listeners in a topic (<em>n</em>&gt;=2), significant performance advantage can be obtained.</p>
+<p>(1) <strong>Built-in multicast support</strong>. When there are <em>n</em> listeners in a topic (<em>n</em>&gt;=2), significant performance advantage can be obtained.</p>
 
-<p>(2) <strong>Robustness in unexpected settings</strong>. For example, it has better reconnection behavior when dropping out of wireless (according to the report of Dirk Thomas <a href="http://roscon.ros.org/2014/wp-content/uploads/2014/07/ROSCON-2014-Next-Generation-of-ROS-on-top-of-DDS.pdf">link</a>).</p>
+<p>(2) <strong>Robustness in some adverse network environments</strong>. For example, it has better reconnection behavior when dropping out of wireless (according to the report of Dirk Thomas <a href="http://roscon.ros.org/2014/wp-content/uploads/2014/07/ROSCON-2014-Next-Generation-of-ROS-on-top-of-DDS.pdf">link</a>).</p>
 
 <p>(3) <strong>Real-time and other QoS assurance in message delivery</strong>. For example, you can set the transport priority and latency budget of messages, specify expected message arriving deadline and the behavior when the deadline is not met, set time-based filter to the messages on a topic, and so on.</p>
 
@@ -86,7 +86,7 @@
 <h1>
 <a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h1>
 
-<p>See the user's manual of MmcROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>).</p>
+<p>See the user's manual of micROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>).</p>
 
 <p>Please contact us through <a href="mailto:bding@msn.com">bding@msn.com</a>. Any feedback would be greatly appreciated.</p>
       </section>
