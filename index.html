@@ -1,74 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <title>micROS RT by cyberdb</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>micROS rt by cyberdb</title>
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <div class="wrapper">
+      <header>
+        <h1>micROS RT</h1>
+        <p>an implementation of ROS 1.x on DDS</p>
+        <p class="view"><a href="https://github.com/cyberdb/micROS-RT">View the Project on GitHub <small>cyberdb/micROS-RT</small></a></p>
+        <ul>
+          <li><a href="https://github.com/cyberdb/micROS-RT/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/cyberdb/micROS-RT/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/cyberdb/micROS-RT">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>Please contact us through <a href="mailto:bding@msn.com">bding@msn.com</a>. Any feedback would be greatly appreciated!</p>
 
-        <header>
-          <h1>micROS rt</h1>
-          <h2>an implementation of ROS 1.x on DDS</h2>
-        </header>
+<p>More information can be found in the user's manual of micROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>) and our website <a href="http://micros.nudt.edu.cn/">http://micros.nudt.edu.cn/</a></p>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/cyberdb/micROS-RT/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/cyberdb/micROS-RT/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/cyberdb/micROS-RT" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
+<h1>
+<a name="introduction" class="anchor" href="#introduction"><span class="octicon octicon-link"></span></a>Introduction</h1>
 
-        <hr>
+<p>micROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Systems for Realtime Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (<a href="http://portals.omg.org/dds/">http://portals.omg.org/dds/</a>). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. By replacing the original ROS message protocols (TCPROS &amp; UDPROS) with DDS, a set of advanced features can be supported in the ROS message delivery process.</p>
 
-        <section id="main_content">
-          <p>MicROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Systems for Realtime Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (<a href="http://portals.omg.org/dds/">http://portals.omg.org/dds/</a>). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. </p>
+<p>(1) <strong>Enabling multi-cast</strong>. When there are <em>n</em> listeners in a topic (<em>n</em>&gt;=2), significant performance advantage can be obtained.</p>
 
-<p>By replacing the original ROS message protocols (TCPROS &amp; UDPROS) with DDS, we can support a set of advanced features in ROS message delivery process, such as UDP-based multicast and setting the QoS properties (transport priority, latency budget, etc.) of a specific topic. In concrete, we can achieve the benefits as follows.</p>
+<p>(2) <strong>Robustness in unexpected settings</strong>. For example, it has better reconnection behavior when dropping out of wireless (according to the report of Dirk Thomas <a href="http://roscon.ros.org/2014/wp-content/uploads/2014/07/ROSCON-2014-Next-Generation-of-ROS-on-top-of-DDS.pdf">link</a>).</p>
 
-<p><strong>General benefits</strong></p>
+<p>(3) <strong>Real-time and other QoS assurance in message delivery</strong>. For example, you can set the transport priority and latency budget of messages, specify expected message arriving deadline and the behavior when the deadline is not met, set time-based filter to the messages on a topic, and so on.</p>
 
-<p>(1) <strong>Multicast in message delivery</strong>. The DDS middleware will automatically select the multicast protocol when necessary. Therefore, when there are n listeners in a topic (n&gt;=2), you can achieve significant performance benefit.</p>
+<p>Existing ROS packages can easily benefit from feature 1 and 2. No modification/recompilation is needed and the only thing you should do is to replace a library file in the ROS installation path. If you want to specify the real-time and other QoS properties (feature 3), you can use two newly added APIs in your program(advertiseWithQoS() and subscribeWithQoS()). More details can be found in the user's manual of micROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>).</p>
 
-<p>(2) <strong>Robustness in unexpected settings</strong>.  Since DDS is a mature and industry-level message delivery system, it is behaves better in various complex communications settings. For example, it has better reconnection behavior when dropping out of wireless.</p>
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
 
-<p><strong>QoS-assurance in message delivery</strong></p>
+<p>Currently, micROS RT is modified based on ROS Indigo. However, the version modified based on ROS Hydro will be provided soon. You can install micROS RT in two different ways: binary library or source code.</p>
 
-<p>(1) <strong>Transport priority and latency budget of a topic</strong>. With micROS RT, you can specify the transport priority and latency budget of a topic. It is useful in many real-time settings, such as multi-robot collaboration with limited wireless network bandwidth.</p>
+<h3>
+<a name="installation-from-binary-library" class="anchor" href="#installation-from-binary-library"><span class="octicon octicon-link"></span></a>Installation from binary library</h3>
 
-<p>(2) <strong>Expected message arriving deadline</strong>. With micROS RT, you can set the expected message arriving period as well as the behavior when a message not arriving in this period. It is also useful in real-time settings.</p>
+<p>Step1: Replacing official ROS C++ Kernel with micROS RT</p>
 
-<p>(3) <strong>Time-based message filter</strong>. You can filter unnecessary messages based on time properties. For example, if you need only update the state of a sensor per minute, you can ignore other redundant messages by simply setting a property while you subscribing the topic.</p>
+<p>(1) Installing ROS Indigo.</p>
 
-<p>(4) <strong>Other QoS-related features</strong>. With micROS RT, you can specify other QoS-related properties provided by the underlying DDS middleware in a simplified way when advertising/subscribing a topic, such as reliability of message delivery, data-centric update, message order method, and message valid period.</p>
+<p>(2) Installing OpenSplice DDS 6.4 community version (<a href="http://www.prismtech.com/opensplice/opensplice-dds-community">http://www.prismtech.com/opensplice/opensplice-dds-community</a>).</p>
 
-<p><strong>Compatibility</strong></p>
+<p>(3) Please ensure that the DDS environment variables have been set correctly. Usually, you can achieve this goal by simply running "source %DDSInstallationPath%/release.com".</p>
 
-<p>(1) <strong>Existing ROS packages need no modification</strong>. Existing ROS packages can easily benefit from DDS by simply replacing the libroscpp.so in the ROS installation directory. Those packages needs no modification and re-compilation.</p>
+<p>(4) Downloading libroscpp.so from <a href="https://github.com/cyberdb/micROS-RT/tree/master/lib">here</a>. Please select the appropriate directory according to you ROS version and OS bits (indigo 64bit or indigo 32bit).</p>
 
-<p>(2) <strong>Existing ROS programming paradigm is kept</strong>. Existing ROS programming paradigm is kept, except for several new APIs to set topic QoS are added.</p>
+<p>(5) Replacing the libroscpp.so in the ROS library directory (usually /opt/indigo/lib/) with the file you downloaded.</p>
 
-<p>(3) <strong>Interoperable with official ROS kernel</strong>. The micROS RT can smartly choose appropriate protocol when it communicate with a official C++ or Python ROS kernel. The preferred protocol of a topic can also be specified when advertising it.</p>
+<p>Step2: Adding micROS RT development suppport (<em>optional</em>)</p>
 
-<p>In fact, the ROS official has also the plan to integrate ROS 2.0, the next generation of ROS, with DDS (<a href="http://design.ros2.org/articles/ros_on_dds.html">http://design.ros2.org/articles/ros_on_dds.html</a>). The major difference between micROS RT and future ROS 2.0 includes: (1) We keeps compatibility with existing ROS 1.x package and programming paradigm, because we believe that protecting the existing investment should be important to the ROS community. (2) We lays strong emphasis on exploiting the QoS-features of the underlying DDS middleware, because we believe that it should be important to multi-node and multi-robot applications.</p>
-        </section>
+<p>(6) If you want to use micROS-RT newly added APIs in you program, please download the micROS-RT header files from <a href="https://github.com/cyberdb/micROS-RT/blob/master/lib/include.indigo.tar.gz">here</a> (by pressing the “raw” button)  and extract them into the %ROSInstallationPath%/include/ros directory (usually /opt/indigo/include/ros). You will be prompted that several files are replaced.</p>
 
-        <footer>
-          micROS rt is maintained by <a href="https://github.com/cyberdb">cyberdb</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+<h3>
+<a name="installation-from-source-code" class="anchor" href="#installation-from-source-code"><span class="octicon octicon-link"></span></a>Installation from source code</h3>
 
-        
-      </div>
+<p>(1) Installing ROS Indigo from source code (<a href="http://wiki.ros.org/indigo/Installation/Source">http://wiki.ros.org/indigo/Installation/Source</a>)</p>
+
+<p>(2) Installing OpenSplice DDS 6.4 community version (<a href="http://www.prismtech.com/opensplice/opensplice-dds-community">http://www.prismtech.com/opensplice/opensplice-dds-community</a>).</p>
+
+<p>(3) Please ensure that the DDS environment variables have been set correctly. Usually, you can achieve this goal by simply running "source %DDSInstallationPath%/release.com". And since you will compile ROS cpp core with DDS devlopment support, the DDSInstallationPath should be the HDE directory of OpenSplice DDS.</p>
+
+<p>(4) Downloading the modified roscpp source code from <a href="https://github.com/cyberdb/micROS-RT/blob/master/src/roscpp.tar.gz">here</a> (by pressing the “raw” button) and extracting it.</p>
+
+<p>(5) Replacing %ROSInstallationPath%/src/ros_comm/roscpp directory with the directory you downloaded.</p>
+
+<p>(6) Recompiling the roscpp package. You can add “--pkg roscpp” to the catkin_make_isolated command to achieve this goal.</p>
+
+<h1>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h1>
+
+<p>See the user's manual of MmcROS RT (<a href="https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf">download</a>).</p>
+
+<p>Please contact us through <a href="mailto:bding@msn.com">bding@msn.com</a>. Any feedback would be greatly appreciated!</p>
+      </section>
     </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/cyberdb">cyberdb</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
