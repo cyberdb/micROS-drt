@@ -20,8 +20,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ros/common.h.in ${CATKIN_DEVE
 
 find_package(Boost REQUIRED COMPONENTS signals filesystem system )
 
-include_directories(include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}/ros ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} $ENV{OSPL_HOME}/include $ENV{OSPL_HOME}/include/sys $ENV{OSPL_HOME}/include/dcps/C++/SACPP)
-link_directories($ENV{OSPL_HOME}/lib)
+include_directories(include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}/ros ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} ${OSPL_HOME}/include ${OSPL_HOME}/include/sys ${OSPL_HOME}/include/dcps/C++/SACPP)
+link_directories(${OSPL_HOME}/lib)
 
 add_message_files(
   DIRECTORY msg
