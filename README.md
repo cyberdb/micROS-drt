@@ -12,8 +12,8 @@ micROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS
 Existing ROS packages can easily benefit from feature 1 and 2. No modification/recompilation is needed and the only thing you should do is to replace a library file in the ROS installation path. If you want to specify the real-time and other QoS properties (feature 3), you can use two newly added APIs in your program(advertiseWithQoS() and subscribeWithQoS()). More details can be found in the user's manual of micROS RT ([download](https://github.com/cyberdb/micROS-RT/blob/master/docs/manual.pdf)).
 
 
-Release Notes
-----------------
+###Release Notes
+
 v0.20(2014-09-25)
 
 1) Adding QoS setting APIs
