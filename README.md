@@ -1,7 +1,7 @@
 micROS-RT
 =========
 
-###Release Notes
+###Introduction
 
 micROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Service for Real-time Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (http://portals.omg.org/dds/). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. By replacing the original ROS message protocols (TCPROS & UDPROS) with DDS, a set of advanced features can be supported in the ROS message delivery process.
 
