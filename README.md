@@ -17,6 +17,12 @@ Please contact us through [bding@msn.com](mailto:bding@msn.com). Any feedback wo
 
 ###Release Notes
 
+v0.21(2015-01-11)
+
+1) Minor bug fixes
+
+2) Compatabile with ROS package image_transport
+
 v0.20(2014-09-25)
 
 1) Adding QoS setting APIs
