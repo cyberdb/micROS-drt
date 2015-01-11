@@ -409,12 +409,23 @@ uint32_t Publication::incrementSequence()
 
 uint32_t Publication::getNumSubscribers()
 {
+  //Count the number of dds subscribers
+  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());
+
   boost::mutex::scoped_lock lock(subscriber_links_mutex_);
-  return (uint32_t)subscriber_links_.size();
+  return (uint32_t)subscriber_links_.size() + dds_num;
 }
 
 void Publication::getPublishTypes(bool& serialize, bool& nocopy, const std::type_info& ti)
 {
+  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());
+  if (dds_num != 0)
+  {
+	  //If we have dds subscribers, we have to serialize the message;
+	  serialize = true;
+	  nocopy = false;
+  }
+
   boost::mutex::scoped_lock lock(subscriber_links_mutex_);
   V_SubscriberLink::const_iterator it = subscriber_links_.begin();
   V_SubscriberLink::const_iterator end = subscriber_links_.end();
@@ -448,9 +459,11 @@ bool Publication::isQoSCompatible(const AdvertiseQoSOptions& required_qos_ops)
 
 bool Publication::hasSubscribers()
 {
+  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());
+
   //TODO: DDS subscribers?
   boost::mutex::scoped_lock lock(subscriber_links_mutex_);
-  return !subscriber_links_.empty();
+  return (!subscriber_links_.empty() && (dds_num != 0));
 }
 
 void Publication::publish(SerializedMessage& m)

@@ -86,6 +86,9 @@ public:
   bool createWriter(std::string topicName, bool latch, const ros::AdvertiseQoSOptions& qos_ops);
   bool publishMsg(std::string topicName, const ros::SerializedMessage& message);
   bool setListener(std::string topicName, DDS::DataReaderListener_var listener);
+
+  uint32_t getNumSubscribers(std::string topicName);
+  bool hasSubscribers(std::string topicName);
 };
 
 }

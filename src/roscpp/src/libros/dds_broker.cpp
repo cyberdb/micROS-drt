@@ -516,3 +516,25 @@ bool DDSBroker::setListener(std::string topicName, DDS::DataReaderListener_var l
 
   return true;
 }
+
+uint32_t DDSBroker::getNumSubscribers(std::string topicName)
+{
+	DataWriter_var writer = getWriter(topicName);
+	if (!writer.in())
+	   return 0;
+
+	DDS::InstanceHandleSeq_var is = new DDS::InstanceHandleSeq;
+	writer->get_matched_subscriptions(is);
+	return (is->length());
+}
+
+bool DDSBroker::hasSubscribers(std::string topicName)
+{
+	DataWriter_var writer = getWriter(topicName);
+	if (!writer.in())
+	   return 0;
+
+	DDS::InstanceHandleSeq_var is = new DDS::InstanceHandleSeq;
+	writer->get_matched_subscriptions(is);
+	return (is->length() != 0);
+}
