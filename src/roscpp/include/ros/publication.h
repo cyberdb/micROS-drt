@@ -99,7 +99,7 @@ public:
             bool latch,
             bool has_header);
 
-  Publication(const std::string &name,
+  Publication(const std::string &name,//添加
             const std::string& datatype,
             const std::string& _md5sum,
             const std::string& message_definition,
@@ -193,7 +193,7 @@ public:
 
   bool validateHeader(const Header& h, std::string& error_msg);
 
-  bool isQoSCompatible(const AdvertiseQoSOptions& qos_ops);
+  bool isQoSCompatible(const AdvertiseQoSOptions& qos_ops);//添加
 
 private:
   void dropAllConnections();
@@ -235,7 +235,7 @@ private:
   V_SerializedMessage publish_queue_;
   boost::mutex publish_queue_mutex_;
 
-  AdvertiseQoSOptions qos_ops_;
+  AdvertiseQoSOptions qos_ops_;//添加
 };
 
 }

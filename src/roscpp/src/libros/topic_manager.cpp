@@ -335,7 +335,7 @@ bool TopicManager::subscribe(const SubscribeOptions& ops)
   return true;
 }
 
-bool TopicManager::subscribeWithQoS(const SubscribeOptions& ops, const SubscribeQoSOptions& qos_ops)
+bool TopicManager::subscribeWithQoS(const SubscribeOptions& ops, const SubscribeQoSOptions& qos_ops)//添加
 {
   boost::mutex::scoped_lock lock(subs_mutex_);
 
@@ -383,14 +383,14 @@ bool TopicManager::subscribeWithQoS(const SubscribeOptions& ops, const Subscribe
   return true;
 }
 
-bool TopicManager::advertise(const AdvertiseOptions& ops, const SubscriberCallbacksPtr& callbacks)
+bool TopicManager::advertise(const AdvertiseOptions& ops, const SubscriberCallbacksPtr& callbacks)//添加
 {
   AdvertiseQoSOptions qos_ops;
 
   return advertiseWithQoS(ops, qos_ops, callbacks);
 }
 
-bool TopicManager::advertiseWithQoS(const AdvertiseOptions& ops, const AdvertiseQoSOptions& qos_ops, const SubscriberCallbacksPtr& callbacks)
+bool TopicManager::advertiseWithQoS(const AdvertiseOptions& ops, const AdvertiseQoSOptions& qos_ops, const SubscriberCallbacksPtr& callbacks)//修改
 {
   if (ops.datatype == "*")
   {
@@ -464,7 +464,7 @@ bool TopicManager::advertiseWithQoS(const AdvertiseOptions& ops, const Advertise
 
     pub = PublicationPtr(
         new Publication(ops.topic, ops.datatype, ops.md5sum, ops.message_definition, ops.queue_size, ops.latch,
-                        ops.has_header, qos_ops));
+                        ops.has_header, qos_ops));//添加
     pub->addCallbacks(callbacks);
     advertised_topics_.push_back(pub);
   }
@@ -710,7 +710,7 @@ bool TopicManager::requestTopic(const string &topic, XmlRpcValue &protos, XmlRpc
       return false;
     }
 
-    string proto_name = proto[0];
+    string proto_name = proto[0];//添加
     if (proto_name == string("DDSROS"))
     {
       XmlRpcValue ddsros_params;
@@ -832,7 +832,7 @@ void TopicManager::publish(const std::string& topic, const boost::function<Seria
     return;
   }
 
-  PublicationPtr p = lookupPublicationWithoutLock(topic);
+  PublicationPtr p = lookupPublicationWithoutLock(topic);//修改
   //if (p->hasSubscribers() || p->isLatching())
   {
     ROS_DEBUG_NAMED("superdebug", "Publishing message on topic [%s] with sequence number [%d]", p->getName().c_str(),

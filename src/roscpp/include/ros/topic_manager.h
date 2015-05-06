@@ -111,11 +111,11 @@ public:
   void shutdown();
 
   bool subscribe(const SubscribeOptions& ops);
-  bool subscribeWithQoS(const SubscribeOptions& ops, const SubscribeQoSOptions& qos_ops);
+  bool subscribeWithQoS(const SubscribeOptions& ops, const SubscribeQoSOptions& qos_ops);//添加
   bool unsubscribe(const std::string &_topic, const SubscriptionCallbackHelperPtr& helper);
 
   bool advertise(const AdvertiseOptions& ops, const SubscriberCallbacksPtr& callbacks);
-  bool advertiseWithQoS(const AdvertiseOptions& ops, const AdvertiseQoSOptions& qos_ops, const SubscriberCallbacksPtr& callbacks);
+  bool advertiseWithQoS(const AdvertiseOptions& ops, const AdvertiseQoSOptions& qos_ops, const SubscriberCallbacksPtr& callbacks);//添加
   bool unadvertise(const std::string &topic, const SubscriberCallbacksPtr& callbacks);
 
   /** @brief Get the list of topics advertised by this node

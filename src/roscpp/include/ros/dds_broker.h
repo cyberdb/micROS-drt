@@ -40,11 +40,41 @@
 
 #include "forwards.h"
 #include "common.h"
-#include "ccpp_dds_dcps.h"
 #include "qos_options.h"
 #include <map>
-
 #include <boost/thread/mutex.hpp>
+
+#include /**/ "dds/DCPS/dcps_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
+#include "tao/Basic_Types.h"
+#include "tao/ORB_Constants.h"
+#include "dds/DCPS/ZeroCopyInfoSeq_T.h"
+#include "tao/Object.h"
+#include "tao/String_Manager_T.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/Arg_Traits_T.h"
+#include "tao/Basic_Arguments.h"
+#include "tao/Special_Basic_Arguments.h"
+#include "tao/Any_Insert_Policy_T.h"
+#include "tao/Fixed_Size_Argument_T.h"
+#include "tao/Var_Size_Argument_T.h"
+#include "tao/UB_String_Arguments.h"
+#include /**/ "tao/Version.h"
+#include /**/ "tao/Versioned_Namespace.h"
+#include "dds/DdsDcpsDomainC.h"
+#include "dds/DdsDcpsInfrastructureC.h"
+#include "dds/DdsDcpsPublicationC.h"
+#include "dds/DdsDcpsSubscriptionExtC.h"
+#include "dds/DdsDcpsTopicC.h"
+#include "dds/DdsDcpsTypeSupportExtC.h"
+#include "ddsC.h"
+#include "dds/DCPS/Marked_Default_Qos.h"
+#include "dds/DCPS/Service_Participant.h"
+#include "ddsTypeSupportC.h"
+#include "ddsTypeSupportImpl.h"
+#include "ddsTypeSupportS.h"
+#include "dds/DCPS/WaitSet.h"
 
 using namespace DDS;
 
@@ -59,15 +89,17 @@ class DDSBroker
   DomainParticipant_var participant;
   Publisher_var publisher;
   Subscriber_var subscriber;
-
-  TopicQos reliable_topic_qos;
-
+  //RtpsDiscovery(const RepoKey& key);
+  //TopicQos reliable_topic_qos;
+  TopicQos topic_qos;
+  //std::map<std::string, RtpsDiscovery> rtps_map;
   std::map<std::string, Topic_var> topic_map;
   std::map<std::string, DataWriter_var> writer_map;
   std::map<std::string, DataReader_var> reader_map;
 
   DomainId_t domain;
-  DDS::String_var typeName;
+  //DDS::String_var typeName;
+  CORBA::String_var type_name;
 
   boost::mutex topic_map_mutex;
   boost::mutex writer_map_mutex;
@@ -76,6 +108,7 @@ class DDSBroker
   Topic_var getTopic(const std::string& topicName);
   DataWriter_var getWriter(std::string topicName);
   DataReader_var getReader(std::string topicName);
+
 
 public:
   DDSBroker();

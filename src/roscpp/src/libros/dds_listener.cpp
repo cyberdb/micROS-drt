@@ -36,9 +36,40 @@
 */
 
 #include "ros/dds_listener.h"
-#include "ros/ccpp_dds_message.h"
+#include "ros/ddsTypeSupportImpl.h"
 #include "ros/subscription.h"
 #include <sstream>
+#include /**/ "dds/DCPS/dcps_export.h"
+#include "tao/ORB.h"
+#include "tao/SystemException.h"
+#include "tao/Basic_Types.h"
+#include "tao/ORB_Constants.h"
+#include "dds/DCPS/ZeroCopyInfoSeq_T.h"
+#include "tao/Object.h"
+#include "tao/String_Manager_T.h"
+#include "tao/Objref_VarOut_T.h"
+#include "tao/Arg_Traits_T.h"
+#include "tao/Basic_Arguments.h"
+#include "tao/Special_Basic_Arguments.h"
+#include "tao/Any_Insert_Policy_T.h"
+#include "tao/Fixed_Size_Argument_T.h"
+#include "tao/Var_Size_Argument_T.h"
+#include "tao/UB_String_Arguments.h"
+#include /**/ "tao/Version.h"
+#include /**/ "tao/Versioned_Namespace.h"
+#include "dds/DdsDcpsDomainC.h"
+#include "dds/DdsDcpsInfrastructureC.h"
+#include "dds/DdsDcpsPublicationC.h"
+#include "dds/DdsDcpsSubscriptionExtC.h"
+#include "dds/DdsDcpsTopicC.h"
+#include "dds/DdsDcpsTypeSupportExtC.h"
+#include "ddsC.h"
+#include "dds/DCPS/Marked_Default_Qos.h"
+#include "dds/DCPS/Service_Participant.h"
+#include "ddsTypeSupportC.h"
+#include "ddsTypeSupportImpl.h"
+#include "ddsTypeSupportS.h"
+#include "dds/DCPS/WaitSet.h"
 
 using namespace DDS;
 using namespace ROSDDS;
@@ -46,10 +77,11 @@ using namespace ROSDDS;
 extern std::string RetCodeName[13];
 #define RETCODE_DESC(ret) RetCodeName[ret].c_str()
 
-std::string dds2rosName(DDS::String_var ddsName);
+std::string dds2rosName(CORBA::String_var ddsName);
 
-void DDSListener::on_data_available(DDS::DataReader_ptr reader) THROW_ORB_EXCEPTIONS
+void DDSListener::on_data_available(DDS::DataReader_ptr reader) 
 {
+  printf ("001");
   DDS::ReturnCode_t status;
   MsgSeq msgList;
   SampleInfoSeq infoSeq;
@@ -66,7 +98,7 @@ void DDSListener::on_data_available(DDS::DataReader_ptr reader) THROW_ORB_EXCEPT
     ROS_ERROR("[DDS] Failed to take messages on topic %s (%s). ", topicName.c_str(), RETCODE_DESC(status));
     return;
   }
-  for (DDS::ULong j = 0; j < msgList.length(); j++)
+  for (CORBA::ULong j = 0; j < msgList.length(); j++)
   {
     if (strlen(msgList[j].callerId.in()) == 0)
     {
