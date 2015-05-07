@@ -115,15 +115,23 @@ std::string dds2rosName(CORBA::String_var ddsName)
   return temp;
 }
 
-const DDSBrokerPtr& DDSBroker::instance()
+void DDSBroker::init(int argc, char** argv)
 {
   if (!g_dds_broker)
   {
     boost::mutex::scoped_lock lock(g_dds_broker_mutex);
     if (!g_dds_broker)
     {
-      g_dds_broker.reset(new DDSBroker);
+     g_dds_broker.reset(new DDSBroker(argc, argv));
     }
+  }
+}
+
+const DDSBrokerPtr& DDSBroker::instance()
+{
+  if (!g_dds_broker)
+  {
+     ROS_ERROR("DDSBroker isnot inited");
   }
 
   return g_dds_broker;
@@ -420,11 +428,11 @@ DataReader_var DDSBroker::getReader(std::string topicName)
     return NULL;
 }
 
-DDSBroker::DDSBroker()
+DDSBroker::DDSBroker(int argc, char** argv)
 {
   //create a default participant
   domain = 0;
-  dpf = TheParticipantFactory;
+  dpf = TheParticipantFactoryWithArgs(argc, argv);
   ROS_ASSERT_MSG(dpf.in(), "[DDS] Failed to get DDS factory.");
   participant = dpf->create_participant(domain, PARTICIPANT_QOS_DEFAULT, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
   ROS_ASSERT_MSG(participant.in(), "[DDS] Failed to create DDS participant.");

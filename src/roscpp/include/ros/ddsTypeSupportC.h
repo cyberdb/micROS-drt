@@ -638,7 +638,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1703
 #if defined (__ACE_INLINE__)
-#include "ddsTypeSupportC.inl"
+//#include "ros/ddsTypeSupportC.inl"
 #endif /* defined INLINE */
 
 #endif /* ifndef */

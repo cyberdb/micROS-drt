@@ -111,9 +111,11 @@ class DDSBroker
 
 
 public:
-  DDSBroker();
+
+  DDSBroker(int argc, char** argv);
   ~DDSBroker();
 
+  static void init(int argc, char** argv);
   static const DDSBrokerPtr& instance();
   bool createReader(std::string topicName, const ros::SubscribeQoSOptions& qos_ops);
   bool createWriter(std::string topicName, bool latch, const ros::AdvertiseQoSOptions& qos_ops);
