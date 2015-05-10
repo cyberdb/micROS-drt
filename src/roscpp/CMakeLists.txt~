@@ -35,6 +35,8 @@ add_service_files(
 
 generate_messages()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENDDS_NO_BUILT_IN_TOPICS -DOPENDDS_NO_CONTENT_SUBSCRIPTION -DOPENDDS_NO_QUERY_CONDITION -DOPENDDS_NO_CONTENT_FILTERED_TOPIC -DOPENDDS_NO_OBJECT_MODEL_PROFILE -DOPENDDS_NO_PERSISTENCE_PROFILE -DOPENDDS_NO_OWNERSHIP_KIND_EXCLUSIVE -DOPENDDS_NO_OWNERSHIP_PROFILE -DOPENDDS_NO_MULTI_TOPIC")
+
 set(PTHREAD_LIB "")
 find_package(Threads)
 if(CMAKE_THREAD_LIBS_INIT)
@@ -116,13 +118,13 @@ add_library(roscpp
   src/libros/service.cpp
   src/libros/this_node.cpp
   src/libros/dds_broker.cpp
-  src/libros/ddsTypeSupportImpl.cpp
   src/libros/dds_listener.cpp
-  src/libros/ddsC.cpp
-  src/libros/ddsS.cpp
-  src/libros/ddsTypeSupportC.cpp
-  src/libros/ddsTypeSupportS.cpp
-  )
+  src/libros/dds_messageC.cpp
+  src/libros/dds_messageS.cpp
+  src/libros/dds_messageTypeSupportC.cpp
+  src/libros/dds_messageTypeSupportS.cpp
+  src/libros/dds_messageTypeSupportImpl.cpp
+ )
 
 add_dependencies(roscpp roscpp_gencpp rosgraph_msgs_gencpp std_msgs_gencpp)
 

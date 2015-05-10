@@ -29,11 +29,11 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:652
 
-#ifndef _TAO_IDL_DDSS_LEMHX5_CPP_
-#define _TAO_IDL_DDSS_LEMHX5_CPP_
+#ifndef _TAO_IDL_DDS_MESSAGES_GFGJ5Y_CPP_
+#define _TAO_IDL_DDS_MESSAGES_GFGJ5Y_CPP_
 
 
-#include "ddsS.h"
+#include "dds_messageS.h"
 
 #endif /* ifndef */
 

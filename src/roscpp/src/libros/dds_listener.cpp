@@ -36,40 +36,8 @@
 */
 
 #include "ros/dds_listener.h"
-#include "ros/ddsTypeSupportImpl.h"
 #include "ros/subscription.h"
 #include <sstream>
-#include /**/ "dds/DCPS/dcps_export.h"
-#include "tao/ORB.h"
-#include "tao/SystemException.h"
-#include "tao/Basic_Types.h"
-#include "tao/ORB_Constants.h"
-#include "dds/DCPS/ZeroCopyInfoSeq_T.h"
-#include "tao/Object.h"
-#include "tao/String_Manager_T.h"
-#include "tao/Objref_VarOut_T.h"
-#include "tao/Arg_Traits_T.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Special_Basic_Arguments.h"
-#include "tao/Any_Insert_Policy_T.h"
-#include "tao/Fixed_Size_Argument_T.h"
-#include "tao/Var_Size_Argument_T.h"
-#include "tao/UB_String_Arguments.h"
-#include /**/ "tao/Version.h"
-#include /**/ "tao/Versioned_Namespace.h"
-#include "dds/DdsDcpsDomainC.h"
-#include "dds/DdsDcpsInfrastructureC.h"
-#include "dds/DdsDcpsPublicationC.h"
-#include "dds/DdsDcpsSubscriptionExtC.h"
-#include "dds/DdsDcpsTopicC.h"
-#include "dds/DdsDcpsTypeSupportExtC.h"
-#include "ddsC.h"
-#include "dds/DCPS/Marked_Default_Qos.h"
-#include "dds/DCPS/Service_Participant.h"
-#include "ddsTypeSupportC.h"
-#include "ddsTypeSupportImpl.h"
-#include "ddsTypeSupportS.h"
-#include "dds/DCPS/WaitSet.h"
 
 using namespace DDS;
 using namespace ROSDDS;
@@ -81,7 +49,6 @@ std::string dds2rosName(CORBA::String_var ddsName);
 
 void DDSListener::on_data_available(DDS::DataReader_ptr reader) 
 {
-  printf ("001");
   DDS::ReturnCode_t status;
   MsgSeq msgList;
   SampleInfoSeq infoSeq;
@@ -100,23 +67,23 @@ void DDSListener::on_data_available(DDS::DataReader_ptr reader)
   }
   for (CORBA::ULong j = 0; j < msgList.length(); j++)
   {
-    if (strlen(msgList[j].callerId.in()) == 0)
+    /*if (strlen(msgList[j].callerId.in()) == 0)
     {
       //TODO: Why?
       std::string msg = std::string("DDS Service Info: A publisher on topic [") + topicName + std::string("] disappeared.");
       ROS_WARN("%s", msg.c_str());
     }
     else
-    {
+    {*/
       int msgLen = msgList[j].message.length();
       boost::shared_array<uint8_t> buf(new uint8_t[msgLen]);
 
       memcpy(buf.get(), msgList[j].message.get_buffer(), msgLen);
       ros::SerializedMessage m(buf, msgLen);
       //ignore the message length (32bit word)
-      m.message_start = buf.get() + 4;
-      subscription_->handleMessage(m, std::string(msgList[j].callerId.in()));
-    }
+      //m.message_start = buf.get() + 4;
+      subscription_->handleMessage(m, std::string("unknown_publisher"));
+    //}
   }
   status = msgReader->return_loan(msgList, infoSeq);
   if (status != DDS::RETCODE_OK)

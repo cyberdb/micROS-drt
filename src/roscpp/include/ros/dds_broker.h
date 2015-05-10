@@ -68,12 +68,12 @@
 #include "dds/DdsDcpsSubscriptionExtC.h"
 #include "dds/DdsDcpsTopicC.h"
 #include "dds/DdsDcpsTypeSupportExtC.h"
-#include "ddsC.h"
+#include "ros/dds_messageC.h"
 #include "dds/DCPS/Marked_Default_Qos.h"
 #include "dds/DCPS/Service_Participant.h"
-#include "ddsTypeSupportC.h"
-#include "ddsTypeSupportImpl.h"
-#include "ddsTypeSupportS.h"
+#include "ros/dds_messageTypeSupportC.h"
+#include "ros/dds_messageTypeSupportImpl.h"
+#include "ros/dds_messageTypeSupportS.h"
 #include "dds/DCPS/WaitSet.h"
 
 using namespace DDS;

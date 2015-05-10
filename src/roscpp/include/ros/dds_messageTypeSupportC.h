@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:152
 
-#ifndef _TAO_IDL_DDSTYPESUPPORTC_7ASTF9_H_
-#define _TAO_IDL_DDSTYPESUPPORTC_7ASTF9_H_
+#ifndef _TAO_IDL_DDS_MESSAGETYPESUPPORTC_GLPTB1_H_
+#define _TAO_IDL_DDS_MESSAGETYPESUPPORTC_GLPTB1_H_
 
 
 #include /**/ "ace/config-all.h"
@@ -62,12 +62,9 @@
 #include /**/ "tao/Version.h"
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ddsC.h"
-#include "dds/DdsDcpsInfrastructureC.h"
-#include "dds/DdsDcpsPublicationC.h"
-#include "dds/DdsDcpsSubscriptionExtC.h"
-#include "dds/DdsDcpsTopicC.h"
 #include "dds/DdsDcpsTypeSupportExtC.h"
+
+#include "ros/dds_messageC.h"
 
 #if TAO_MAJOR_VERSION != 2 || TAO_MINOR_VERSION != 2 || TAO_BETA_VERSION != 0
 #error This file should be regenerated with TAO_IDL
@@ -638,7 +635,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1703
 #if defined (__ACE_INLINE__)
-//#include "ros/ddsTypeSupportC.inl"
+#include "dds_messageTypeSupportC.inl"
 #endif /* defined INLINE */
 
 #endif /* ifndef */

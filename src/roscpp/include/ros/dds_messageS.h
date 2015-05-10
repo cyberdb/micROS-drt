@@ -28,17 +28,11 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:461
 
-#ifndef _TAO_IDL_DDSTYPESUPPORTS_DMYCU0_H_
-#define _TAO_IDL_DDSTYPESUPPORTS_DMYCU0_H_
+#ifndef _TAO_IDL_DDS_MESSAGES_SUTPMR_H_
+#define _TAO_IDL_DDS_MESSAGES_SUTPMR_H_
 
 
-#include "ddsTypeSupportC.h"
-#include "ddsS.h"
-#include "dds/DdsDcpsInfrastructureS.h"
-#include "dds/DdsDcpsPublicationS.h"
-#include "dds/DdsDcpsSubscriptionExtS.h"
-#include "dds/DdsDcpsTopicS.h"
-#include "dds/DdsDcpsTypeSupportExtS.h"
+#include "ros/dds_messageC.h"
 #include "tao/PortableServer/Basic_SArguments.h"
 #include "tao/PortableServer/Special_Basic_SArguments.h"
 #include "tao/PortableServer/Fixed_Size_SArgument_T.h"
@@ -58,6 +52,32 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Arg traits specializations.
 namespace TAO
 {
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:685
+
+  template<>
+  class SArg_Traits< ::ROSDDS::OctSeq>
+    : public
+        Var_Size_SArg_Traits_T<
+            ::ROSDDS::OctSeq,
+            TAO::Any_Insert_Policy_Stream
+          >
+  {
+  };
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:947
+
+  template<>
+  class SArg_Traits< ::ROSDDS::Msg>
+    : public
+        Var_Size_SArg_Traits_T<
+            ::ROSDDS::Msg,
+            TAO::Any_Insert_Policy_Stream
+          >
+  {
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

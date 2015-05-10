@@ -35,42 +35,10 @@
 *
 */
 
-#include "os.h"
 #include "ros/dds_broker.h"
 #include "ros/this_node.h"
 #include "ros/qos_options.h"
 
-#include /**/ "dds/DCPS/dcps_export.h"
-#include "tao/ORB.h"
-#include "tao/SystemException.h"
-#include "tao/Basic_Types.h"
-#include "tao/ORB_Constants.h"
-#include "dds/DCPS/ZeroCopyInfoSeq_T.h"
-#include "tao/Object.h"
-#include "tao/String_Manager_T.h"
-#include "tao/Objref_VarOut_T.h"
-#include "tao/Arg_Traits_T.h"
-#include "tao/Basic_Arguments.h"
-#include "tao/Special_Basic_Arguments.h"
-#include "tao/Any_Insert_Policy_T.h"
-#include "tao/Fixed_Size_Argument_T.h"
-#include "tao/Var_Size_Argument_T.h"
-#include "tao/UB_String_Arguments.h"
-#include /**/ "tao/Version.h"
-#include /**/ "tao/Versioned_Namespace.h"
-#include "dds/DdsDcpsDomainC.h"
-#include "dds/DdsDcpsInfrastructureC.h"
-#include "dds/DdsDcpsPublicationC.h"
-#include "dds/DdsDcpsSubscriptionExtC.h"
-#include "dds/DdsDcpsTopicC.h"
-#include "dds/DdsDcpsTypeSupportExtC.h"
-#include "ddsC.h"
-#include "dds/DCPS/Marked_Default_Qos.h"
-#include "dds/DCPS/Service_Participant.h"
-#include "ddsTypeSupportC.h"
-#include "ddsTypeSupportImpl.h"
-#include "ddsTypeSupportS.h"
-#include "dds/DCPS/WaitSet.h"
 #define PARTITION_NAME "ROSDDS"
 
 using namespace ROSDDS;
@@ -91,7 +59,6 @@ std::string ros2ddsName(const std::string& rosName)
   std::string temp = rosName;
   for (std::string::size_type pos(0); pos != std::string::npos; pos += 4)
   {
-    printf ("001");
     if ((pos = temp.find("/", pos)) != std::string::npos)
       temp.replace(pos, 1, "A9e0");
     else
@@ -509,10 +476,6 @@ bool DDSBroker::publishMsg(std::string topicName, const ros::SerializedMessage& 
 
   //encapsulate a ros message into a dds message
   Msg msgInstance;
-  msgInstance.version = 1;
-  msgInstance.callerId = ros::this_node::getName().c_str();
-  for (int i = 0; i < 8; i++)
-    msgInstance.reserved = '0';
   unsigned int bufsize = content.num_bytes;
 
   msgInstance.message.replace(bufsize, bufsize, (unsigned char*)content.buf.get(), false);

@@ -28,8 +28,8 @@
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:152
 
-#ifndef _TAO_IDL_DDSC_NLTBUJ_H_
-#define _TAO_IDL_DDSC_NLTBUJ_H_
+#ifndef _TAO_IDL_DDS_MESSAGEC_FDHRBT_H_
+#define _TAO_IDL_DDS_MESSAGEC_FDHRBT_H_
 
 
 #include /**/ "ace/config-all.h"
@@ -43,9 +43,9 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/ORB.h"
 #include "tao/Basic_Types.h"
-#include "tao/String_Manager_T.h"
-#include "tao/AnyTypeCode/OctetSeqA.h"
-#include "tao/AnyTypeCode/ULongSeqA.h"
+#include "tao/Sequence_T.h"
+#include "tao/Seq_Var_T.h"
+#include "tao/Seq_Out_T.h"
 #include "tao/VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Basic_Arguments.h"
@@ -53,12 +53,8 @@
 #include "tao/Any_Insert_Policy_T.h"
 #include "tao/Fixed_Size_Argument_T.h"
 #include "tao/Var_Size_Argument_T.h"
-#include "tao/UB_String_Arguments.h"
 #include /**/ "tao/Version.h"
 #include /**/ "tao/Versioned_Namespace.h"
-
-#include "tao/OctetSeqC.h"
-#include "tao/ULongSeqC.h"
 
 #if TAO_MAJOR_VERSION != 2 || TAO_MINOR_VERSION != 2 || TAO_BETA_VERSION != 0
 #error This file should be regenerated with TAO_IDL
@@ -74,6 +70,71 @@
 
 namespace ROSDDS
 {
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_sequence/sequence_ch.cpp:102
+
+#if !defined (_ROSDDS_OCTSEQ_CH_)
+#define _ROSDDS_OCTSEQ_CH_
+
+  class OctSeq;
+
+  typedef
+    ::TAO_FixedSeq_Var_T<
+        OctSeq
+      >
+    OctSeq_var;
+
+  typedef
+    ::TAO_Seq_Out_T<
+        OctSeq
+      >
+    OctSeq_out;
+
+  class  OctSeq
+    : public
+        ::TAO::unbounded_value_sequence<
+            ::CORBA::Octet
+          >
+  {
+  public:
+    OctSeq (void);
+    OctSeq ( ::CORBA::ULong max);
+    OctSeq (
+      ::CORBA::ULong max,
+      ::CORBA::ULong length,
+      ::CORBA::Octet* buffer,
+      ::CORBA::Boolean release = false);
+    OctSeq (const OctSeq &);
+    virtual ~OctSeq (void);
+    
+
+    // TAO_IDL - Generated from
+    // be/be_type.cpp:307
+
+    
+    typedef OctSeq_var _var_type;
+    typedef OctSeq_out _out_type;
+
+    static void _tao_any_destructor (void *);
+
+    
+
+#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+    OctSeq (
+        ::CORBA::ULong length,
+        const ACE_Message_Block* mb
+      )
+      : ::TAO::unbounded_value_sequence< ::CORBA::Octet> (length, mb) {}
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+  };
+
+#endif /* end #if !defined */
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_typecode/typecode_decl.cpp:37
+
+  extern  ::CORBA::TypeCode_ptr const _tc_OctSeq;
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:261
@@ -107,10 +168,7 @@ namespace ROSDDS
 
     static void _tao_any_destructor (void *);
     
-    ::CORBA::Octet reserved;
-    CORBA::ULongSeq version;
-    ::TAO::String_Manager callerId;
-    CORBA::OctetSeq message;
+    ROSDDS::OctSeq message;
   };
 
   // TAO_IDL - Generated from
@@ -132,6 +190,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Arg traits specializations.
 namespace TAO
 {
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:685
+
+  template<>
+  class Arg_Traits< ::ROSDDS::OctSeq>
+    : public
+        Var_Size_Arg_Traits_T<
+            ::ROSDDS::OctSeq,
+            TAO::Any_Insert_Policy_Stream
+          >
+  {
+  };
 
   // TAO_IDL - Generated from
   // be/be_visitor_arg_traits.cpp:947
@@ -165,6 +236,36 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 // TAO_IDL - Generated from
+// be/be_visitor_sequence/any_op_ch.cpp:50
+
+
+
+#if defined (ACE_ANY_OPS_USE_NAMESPACE)
+
+namespace ROSDDS
+{
+   void operator<<= ( ::CORBA::Any &, const ::ROSDDS::OctSeq &); // copying version
+   void operator<<= ( ::CORBA::Any &, ::ROSDDS::OctSeq*); // noncopying version
+   ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::ROSDDS::OctSeq *&); // deprecated
+   ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::ROSDDS::OctSeq *&);
+}
+
+#else
+
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+ void operator<<= ( ::CORBA::Any &, const ROSDDS::OctSeq &); // copying version
+ void operator<<= ( ::CORBA::Any &, ROSDDS::OctSeq*); // noncopying version
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ROSDDS::OctSeq *&); // deprecated
+ ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ROSDDS::OctSeq *&);
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+
+#endif
+
+// TAO_IDL - Generated from
 // be/be_visitor_structure/any_op_ch.cpp:45
 
 
@@ -195,6 +296,27 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif
 
 // TAO_IDL - Generated from
+// be/be_visitor_sequence/cdr_op_ch.cpp:68
+
+#if !defined _TAO_CDR_OP_ROSDDS_OctSeq_H_
+#define _TAO_CDR_OP_ROSDDS_OctSeq_H_
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+
+ ::CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const ROSDDS::OctSeq &_tao_sequence);
+ ::CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    ROSDDS::OctSeq &_tao_sequence);
+
+TAO_END_VERSIONED_NAMESPACE_DECL
+
+
+
+#endif /* _TAO_CDR_OP_ROSDDS_OctSeq_H_ */
+
+// TAO_IDL - Generated from
 // be/be_visitor_structure/cdr_op_ch.cpp:46
 
 
@@ -210,6 +332,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1703
 #if defined (__ACE_INLINE__)
+#include "dds_messageC.inl"
 #endif /* defined INLINE */
 
 #endif /* ifndef */

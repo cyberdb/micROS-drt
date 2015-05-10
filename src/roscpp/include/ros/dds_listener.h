@@ -21,10 +21,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-#include "ddsTypeSupportImpl.h"
-#include "ros/ddsTypeSupportImpl.h"
-#include "ros/subscription.h"
-#include <sstream>
+
 #include /**/ "dds/DCPS/dcps_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
@@ -49,12 +46,12 @@
 #include "dds/DdsDcpsSubscriptionExtC.h"
 #include "dds/DdsDcpsTopicC.h"
 #include "dds/DdsDcpsTypeSupportExtC.h"
-#include "ddsC.h"
+#include "ros/dds_messageC.h"
 #include "dds/DCPS/Marked_Default_Qos.h"
 #include "dds/DCPS/Service_Participant.h"
-#include "ddsTypeSupportC.h"
-#include "ddsTypeSupportImpl.h"
-#include "ddsTypeSupportS.h"
+#include "ros/dds_messageTypeSupportC.h"
+#include "ros/dds_messageTypeSupportImpl.h"
+#include "ros/dds_messageTypeSupportS.h"
 #include "dds/DCPS/WaitSet.h"
 
 namespace ROSDDS

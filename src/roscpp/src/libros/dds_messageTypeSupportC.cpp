@@ -29,7 +29,7 @@
 // be/be_codegen.cpp:376
 
 
-#include "ddsTypeSupportC.h"
+#include "ros/dds_messageTypeSupportC.h"
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/Alias_TypeCode_Static.h"
@@ -43,7 +43,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ddsTypeSupportC.inl"
+#include "ros/dds_messageTypeSupportC.inl"
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
