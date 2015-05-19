@@ -2039,8 +2039,8 @@ MsgDataReaderImpl::dds_demarshal(
     ser >> ::OpenDDS::DCPS::KeyOnly< ::ROSDDS::Msg>(*data);
   } else {
     //ser >> *data;
-    uint32_t* bufsize = (uint32_t *) sample.sample_->rd_ptr();
-    (*data).message.replace((*bufsize)+4, (*bufsize)+4, (unsigned char*)sample.sample_->rd_ptr(), false);
+    uint32_t bufsize = sample.header_.message_length_;
+    (*data).message.replace(bufsize, bufsize, (unsigned char*)sample.sample_->rd_ptr(), false);
   }
 
 #ifndef OPENDDS_NO_CONTENT_FILTERED_TOPIC
