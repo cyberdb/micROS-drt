@@ -419,7 +419,7 @@ DDSBroker::~DDSBroker()
   DDS::ReturnCode_t status;
 
   //clear up, delete all writers, readers and topics
-  std::map<std::string, DataWriter_var>::iterator iterWriterMap;
+  /*std::map<std::string, DataWriter_var>::iterator iterWriterMap;
   for (iterWriterMap = writer_map.begin(); iterWriterMap != writer_map.end(); iterWriterMap++)
   {
     status = publisher->delete_datawriter(iterWriterMap->second);
@@ -461,7 +461,20 @@ DDSBroker::~DDSBroker()
 
   status = dpf->delete_participant(participant.in());
   if (status != DDS::RETCODE_OK)
-    ROS_WARN("[DDS] Failed to delete DDS subscriber (%s).", RETCODE_DESC(status));
+    ROS_WARN("[DDS] Failed to delete DDS subscriber (%s).", RETCODE_DESC(status));*/
+
+  try {
+    if (!CORBA::is_nil (participant.in ())) {
+      participant->delete_contained_entities();
+    }
+    if (!CORBA::is_nil (dpf.in ())) {
+      dpf->delete_participant(participant.in ());
+    }
+  } catch (CORBA::Exception& e) {
+	ROS_ERROR("Exception caught in cleanup.");
+    ACE_OS::exit(1);
+  }
+  TheServiceParticipant->shutdown();
 }
 
 bool DDSBroker::publishMsg(std::string topicName, const ros::SerializedMessage& content)
