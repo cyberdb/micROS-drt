@@ -4,7 +4,8 @@ micROS-RT
 ###Notice
 micROS RT v0.30 is not a stable version yet. We are testing and fixing bugs. It supports both OpenDDS and OpenSplice DDS and will be released in the next few weeks.
 
-If you want to try micROS-RT right now, please downlad v0.21 stable version from https://github.com/cyberdb/micROS-RT/tree/dd1878cc7d6e852ecaad90ddf3efd30199cca047
+If you want to try micROS-RT right now, please download v0.21 stable version from https://github.com/cyberdb/micROS-RT/tree/dd1878cc7d6e852ecaad90ddf3efd30199cca047
+
 It only supports OpenSplice DDS.
 
 ###Introduction
