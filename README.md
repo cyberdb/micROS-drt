@@ -1,6 +1,12 @@
 micROS-RT
 =========
 
+###Notice
+micROS RT v0.30 is not a stable version yet. We are testing and fixing bugs. It supports both OpenDDS and OpenSplice DDS and will be released in the next few weeks.
+
+If you want to try micROS-RT right now, please downlad v0.2 stable version from https://github.com/cyberdb/micROS-RT/tree/dd1878cc7d6e852ecaad90ddf3efd30199cca047
+It only supports OpenSplice DDS.
+
 ###Introduction
 
 micROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Service for Real-time Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (http://portals.omg.org/dds/). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. By replacing the original ROS message protocols (TCPROS & UDPROS) with DDS, a set of advanced features can be supported in the ROS message delivery process.
