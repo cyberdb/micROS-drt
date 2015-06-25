@@ -109,7 +109,7 @@ class ROSCPP_DECL Subscription : public boost::enable_shared_from_this<Subscript
 public:
   Subscription(const std::string &name, const std::string& md5sum, const std::string& datatype,
                const TransportHints& transport_hints);
-  Subscription(const std::string &name, const std::string& md5sum, const std::string& datatype,
+  Subscription(const std::string &name, const std::string& md5sum, const std::string& datatype,//添加
                const TransportHints& transport_hints, const SubscribeQoSOptions& qos_ops);
   virtual ~Subscription();
 
@@ -157,7 +157,7 @@ public:
    */
   uint32_t handleMessage(const SerializedMessage& m, bool ser, bool nocopy,
                          const boost::shared_ptr<M_string>& connection_header, const PublisherLinkPtr& link);
-  uint32_t handleMessage(const SerializedMessage& m, std::string caller_id);
+  uint32_t handleMessage(const SerializedMessage& m, std::string caller_id);//添加
 
   const std::string datatype();
   const std::string md5sum();
@@ -290,13 +290,13 @@ private:
   V_PublisherLink publisher_links_;
   boost::mutex publisher_links_mutex_;
 
-  DDS::DataReaderListener_var dds_listener_;
+  DDS::DataReaderListener_var dds_listener_;//添加
 
   TransportHints transport_hints_;
 
   StatisticsLogger statistics_;
 
-  SubscribeQoSOptions qos_ops_;
+  SubscribeQoSOptions qos_ops_;//添加
 
   struct LatchInfo
   {

@@ -351,7 +351,7 @@ Publisher NodeHandle::advertise(AdvertiseOptions& ops)
   return Publisher();
 }
 
-Publisher NodeHandle::advertiseWithQoS(AdvertiseOptions& ops, AdvertiseQoSOptions& qos_ops)
+Publisher NodeHandle::advertiseWithQoS(AdvertiseOptions& ops, AdvertiseQoSOptions& qos_ops)//添加
 {
   ops.topic = resolveName(ops.topic);
   if (ops.callback_queue == 0)
@@ -414,7 +414,7 @@ Subscriber NodeHandle::subscribe(SubscribeOptions& ops)
   return Subscriber();
 }
 
-Subscriber NodeHandle::subscribeWithQoS(SubscribeOptions& ops, SubscribeQoSOptions& qos_ops)
+Subscriber NodeHandle::subscribeWithQoS(SubscribeOptions& ops, SubscribeQoSOptions& qos_ops)//添加
 {
   ops.topic = resolveName(ops.topic);
   if (ops.callback_queue == 0)

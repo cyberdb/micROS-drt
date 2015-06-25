@@ -20,8 +20,8 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ros/common.h.in ${CATKIN_DEVE
 
 find_package(Boost REQUIRED COMPONENTS signals filesystem system )
 
-include_directories(include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}/ros ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} $ENV{OSPL_HOME}/include $ENV{OSPL_HOME}/include/sys $ENV{OSPL_HOME}/include/dcps/C++/SACPP)
-link_directories($ENV{OSPL_HOME}/lib)
+include_directories(include ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}/ros ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS} $ENV{DDS_ROOT} $ENV{ACE_ROOT}/TAO $ENV{ACE_ROOT} $ENV{DDS_ROOT}/dds/InfoRepo $ENV{DDS_ROOT}/lib)
+link_directories($ENV{DDS_ROOT}/lib $ENV{ACE_ROOT}/lib)
 
 add_message_files(
   DIRECTORY msg
@@ -34,6 +34,8 @@ add_service_files(
 )
 
 generate_messages()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOPENDDS_NO_CONTENT_SUBSCRIPTION -DOPENDDS_NO_QUERY_CONDITION -DOPENDDS_NO_CONTENT_FILTERED_TOPIC -DOPENDDS_NO_OBJECT_MODEL_PROFILE -DOPENDDS_NO_PERSISTENCE_PROFILE -DOPENDDS_NO_OWNERSHIP_KIND_EXCLUSIVE -DOPENDDS_NO_OWNERSHIP_PROFILE -DOPENDDS_NO_MULTI_TOPIC")
 
 set(PTHREAD_LIB "")
 find_package(Threads)
@@ -116,16 +118,17 @@ add_library(roscpp
   src/libros/service.cpp
   src/libros/this_node.cpp
   src/libros/dds_broker.cpp
-  src/libros/dds_message.cpp
-  src/libros/dds_messageDcps.cpp
-  src/libros/dds_messageDcps_impl.cpp
-  src/libros/dds_messageSplDcps.cpp
   src/libros/dds_listener.cpp
-  )
+  src/libros/dds_messageC.cpp
+  src/libros/dds_messageS.cpp
+  src/libros/dds_messageTypeSupportC.cpp
+  src/libros/dds_messageTypeSupportS.cpp
+  src/libros/dds_messageTypeSupportImpl.cpp
+ )
 
 add_dependencies(roscpp roscpp_gencpp rosgraph_msgs_gencpp std_msgs_gencpp)
 
-target_link_libraries(roscpp dcpssacpp ddskernel
+target_link_libraries(roscpp OpenDDS_Dcps ACE TAO TAO_AnyTypeCode
   ${catkin_LIBRARIES}
   ${Boost_LIBRARIES}
   )

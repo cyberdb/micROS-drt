@@ -64,6 +64,8 @@
 
 #include <cstdlib>
 
+#include "ros/dds_broker.h"
+
 namespace ros
 {
 
@@ -494,6 +496,7 @@ void init(int& argc, char** argv, const std::string& name, uint32_t options)
   }
 
   init(remappings, name, options);
+  ROSDDS::DDSBroker::init(argc, argv);
 }
 
 void init(const VP_string& remappings, const std::string& name, uint32_t options)
