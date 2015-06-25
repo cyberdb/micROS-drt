@@ -115,7 +115,7 @@ Publication::Publication(const std::string &name, const std::string &datatype, c
     name_(name), datatype_(datatype), md5sum_(_md5sum), message_definition_(message_definition), max_queue_(max_queue), seq_(
         0), dropped_(false), latch_(latch), has_header_(has_header), intraprocess_subscriber_count_(0)
 {
-  //Tell the DDSBroker to precreate a writer to avoid performance lag//添加
+  //Tell the DDSBroker to precreate a writer to avoid performance lag
   ROSDDS::DDSBroker::instance()->createWriter(name_, latch, qos_ops_);
 }
 
@@ -126,7 +126,7 @@ Publication::Publication(const std::string &name, const std::string &datatype, c
         0), dropped_(false), latch_(latch), has_header_(has_header), intraprocess_subscriber_count_(0), qos_ops_(
         qos_ops)
 {
-  //Tell the DDSBroker to precreate a writer to avoid performance lag//添加
+  //Tell the DDSBroker to precreate a writer to avoid performance lag
   ROSDDS::DDSBroker::instance()->createWriter(name_, latch, qos_ops_);
 }
 
@@ -224,7 +224,7 @@ bool Publication::enqueueMessage(const SerializedMessage& m)
   }
 
   // We always publish the message on DDS
-  ROSDDS::DDSBroker::instance()->publishMsg(getName(), m);//添加
+  ROSDDS::DDSBroker::instance()->publishMsg(getName(), m);
 
   if (latch_)
   {
@@ -410,7 +410,7 @@ uint32_t Publication::incrementSequence()
 uint32_t Publication::getNumSubscribers()
 {
   //Count the number of dds subscribers
-  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());//添加
+  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());
 
   boost::mutex::scoped_lock lock(subscriber_links_mutex_);
   return (uint32_t)subscriber_links_.size() + dds_num;
@@ -421,7 +421,7 @@ void Publication::getPublishTypes(bool& serialize, bool& nocopy, const std::type
   uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());
   if (dds_num != 0)
   {
-	  //If we have dds subscribers, we have to serialize the message;//添加
+	  //If we have dds subscribers, we have to serialize the message;
 	  serialize = true;
 	  nocopy = false;
   }
@@ -445,7 +445,7 @@ void Publication::getPublishTypes(bool& serialize, bool& nocopy, const std::type
   }
 }
 
-bool Publication::isQoSCompatible(const AdvertiseQoSOptions& required_qos_ops)//添加
+bool Publication::isQoSCompatible(const AdvertiseQoSOptions& required_qos_ops)
 {
   //check qos compatibility
   if (((qos_ops_.using_best_effort_protocol == true) && (required_qos_ops.using_best_effort_protocol == false))
@@ -459,7 +459,7 @@ bool Publication::isQoSCompatible(const AdvertiseQoSOptions& required_qos_ops)//
 
 bool Publication::hasSubscribers()
 {
-  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());//添加
+  uint32_t dds_num = ROSDDS::DDSBroker::instance()->getNumSubscribers(getName());
 
   //TODO: DDS subscribers?
   boost::mutex::scoped_lock lock(subscriber_links_mutex_);

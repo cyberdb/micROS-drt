@@ -36,6 +36,7 @@
 */
 
 #include "ros/dds_listener.h"
+#include "ros/ccpp_dds_message.h"
 #include "ros/subscription.h"
 #include <sstream>
 
@@ -45,9 +46,9 @@ using namespace ROSDDS;
 extern std::string RetCodeName[13];
 #define RETCODE_DESC(ret) RetCodeName[ret].c_str()
 
-std::string dds2rosName(CORBA::String_var ddsName);
+std::string dds2rosName(DDS::String_var ddsName);
 
-void DDSListener::on_data_available(DDS::DataReader_ptr reader) 
+void DDSListener::on_data_available(DDS::DataReader_ptr reader) THROW_ORB_EXCEPTIONS
 {
   DDS::ReturnCode_t status;
   MsgSeq msgList;
@@ -65,25 +66,25 @@ void DDSListener::on_data_available(DDS::DataReader_ptr reader)
     ROS_ERROR("[DDS] Failed to take messages on topic %s (%s). ", topicName.c_str(), RETCODE_DESC(status));
     return;
   }
-  for (CORBA::ULong j = 0; j < msgList.length(); j++)
+  for (DDS::ULong j = 0; j < msgList.length(); j++)
   {
-    /*if (strlen(msgList[j].callerId.in()) == 0)
+    if (strlen(msgList[j].callerId.in()) == 0)
     {
       //TODO: Why?
       std::string msg = std::string("DDS Service Info: A publisher on topic [") + topicName + std::string("] disappeared.");
       ROS_WARN("%s", msg.c_str());
     }
     else
-    {*/
+    {
       int msgLen = msgList[j].message.length();
       boost::shared_array<uint8_t> buf(new uint8_t[msgLen]);
 
       memcpy(buf.get(), msgList[j].message.get_buffer(), msgLen);
       ros::SerializedMessage m(buf, msgLen);
       //ignore the message length (32bit word)
-      //m.message_start = buf.get() + 4;
-      subscription_->handleMessage(m, std::string("unknown_publisher"));
-    //}
+      m.message_start = buf.get() + 4;
+      subscription_->handleMessage(m, std::string(msgList[j].callerId.in()));
+    }
   }
   status = msgReader->return_loan(msgList, infoSeq);
   if (status != DDS::RETCODE_OK)

@@ -35,6 +35,8 @@
 *
 */
 
+#include "os.h"
+#include "ros/ccpp_dds_message.h"
 #include "ros/dds_broker.h"
 #include "ros/this_node.h"
 #include "ros/qos_options.h"
@@ -45,6 +47,7 @@ using namespace ROSDDS;
 
 DDSBrokerPtr g_dds_broker;
 boost::mutex g_dds_broker_mutex;
+
 std::string RetCodeName[13] = {"DDS_RETCODE_OK", "DDS_RETCODE_ERROR", "DDS_RETCODE_UNSUPPORTED",
                                "DDS_RETCODE_BAD_PARAMETER", "DDS_RETCODE_PRECONDITION_NOT_MET",
                                "DDS_RETCODE_OUT_OF_RESOURCES", "DDS_RETCODE_NOT_ENABLED",
@@ -53,6 +56,7 @@ std::string RetCodeName[13] = {"DDS_RETCODE_OK", "DDS_RETCODE_ERROR", "DDS_RETCO
                                "DDS_RETCODE_ILLEGAL_OPERATION"};
 
 #define RETCODE_DESC(ret) RetCodeName[ret].c_str()
+
 std::string ros2ddsName(const std::string& rosName)
 {
   // convert ros name to dds name, since dds doesn't accept "/" in its topic name
@@ -68,7 +72,7 @@ std::string ros2ddsName(const std::string& rosName)
   return temp;
 }
 
-std::string dds2rosName(CORBA::String_var ddsName)
+std::string dds2rosName(DDS::String_var ddsName)
 {
   // convert dds name to ros name
   std::string temp = (const char*)ddsName;
@@ -82,27 +86,20 @@ std::string dds2rosName(CORBA::String_var ddsName)
   return temp;
 }
 
-void DDSBroker::init(int argc, char** argv)
+const DDSBrokerPtr& DDSBroker::instance()
 {
   if (!g_dds_broker)
   {
     boost::mutex::scoped_lock lock(g_dds_broker_mutex);
     if (!g_dds_broker)
     {
-     g_dds_broker.reset(new DDSBroker(argc, argv));
+      g_dds_broker.reset(new DDSBroker);
     }
-  }
-}
-
-const DDSBrokerPtr& DDSBroker::instance()
-{
-  if (!g_dds_broker)
-  {
-     ROS_ERROR("DDSBroker isnot inited");
   }
 
   return g_dds_broker;
 }
+
 
 
 Topic_var DDSBroker::getTopic(const std::string& topicName)
@@ -126,7 +123,7 @@ Topic_var DDSBroker::getTopic(const std::string& topicName)
     else
     {
       //create the new topic
-      CORBA::String_var tn = topicName.c_str();
+      DDS::String_var tn = topicName.c_str();
 
       DDS::ReturnCode_t status;
       TopicQos topic_qos;
@@ -137,10 +134,10 @@ Topic_var DDSBroker::getTopic(const std::string& topicName)
         return NULL;
       }
       topic_qos.durability_service.history_kind=KEEP_LAST_HISTORY_QOS;
-      topic = participant->create_topic(tn, type_name, topic_qos, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+      topic = participant->create_topic(tn, typeName, topic_qos, NULL, STATUS_MASK_NONE);
       if (!topic.in())
       {
-        ROS_ERROR("[DDS] Failed to create topic %s with type %s.", dds2rosName(tn).c_str(), type_name.in());
+        ROS_ERROR("[DDS] Failed to create topic %s with type %s.", dds2rosName(tn).c_str(), typeName.in());
         return NULL;
       }
 
@@ -156,7 +153,7 @@ bool DDSBroker::createWriter(std::string topicName, bool latch, const ros::Adver
 {
   DDS::ReturnCode_t status;
 
-  if (CORBA::is_nil(publisher))
+  if (DDS::is_nil(publisher))
   {
     PublisherQos pub_qos;
     //create a default publisher
@@ -169,7 +166,7 @@ bool DDSBroker::createWriter(std::string topicName, bool latch, const ros::Adver
 
     pub_qos.partition.name.length(1);
     pub_qos.partition.name[0] = PARTITION_NAME;
-    publisher = participant->create_publisher(pub_qos, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+    publisher = participant->create_publisher(pub_qos, NULL, STATUS_MASK_NONE);
     if (!publisher.in())
     {
       ROS_ERROR("Failed to create DDS publisher.");
@@ -246,7 +243,7 @@ bool DDSBroker::createWriter(std::string topicName, bool latch, const ros::Adver
         dw_qos.lifespan.duration.nanosec=qos_ops.msg_valid_period.nsec;
       }
 
-      writer = publisher->create_datawriter(topic.in(), dw_qos, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+      writer = publisher->create_datawriter(topic.in(), dw_qos, NULL, STATUS_MASK_NONE);
       if (!writer.in())
       {
         ROS_ERROR("[DDS] Failed to create writer on topic %s.", topicName.c_str());
@@ -282,7 +279,7 @@ bool DDSBroker::createReader(std::string topicName, const ros::SubscribeQoSOptio
 {
   DDS::ReturnCode_t status;
 
-  if (CORBA::is_nil(subscriber))
+  if (DDS::is_nil(subscriber))
   {
     SubscriberQos sub_qos;
     //create a default subscriber
@@ -295,7 +292,7 @@ bool DDSBroker::createReader(std::string topicName, const ros::SubscribeQoSOptio
 
     sub_qos.partition.name.length(1);
     sub_qos.partition.name[0] = PARTITION_NAME;
-    subscriber = participant->create_subscriber(sub_qos, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+    subscriber = participant->create_subscriber(sub_qos, NULL, STATUS_MASK_NONE);
     if (!subscriber.in())
     {
       ROS_ERROR("[DDS] Failed to create DDS subscriber.");
@@ -363,7 +360,7 @@ bool DDSBroker::createReader(std::string topicName, const ros::SubscribeQoSOptio
       // we have to set VOLATILE_DURABILITY_QOS because of the RxO policy compatibility
       dr_qos.durability.kind = VOLATILE_DURABILITY_QOS;
 
-      reader = subscriber->create_datareader(topic.in(), dr_qos, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+      reader = subscriber->create_datareader(topic.in(), dr_qos, NULL, STATUS_MASK_NONE);
       if (!reader.in())
       {
         ROS_ERROR("[DDS] Failed to create reader on topic %s.", topicName.c_str());
@@ -395,20 +392,20 @@ DataReader_var DDSBroker::getReader(std::string topicName)
     return NULL;
 }
 
-DDSBroker::DDSBroker(int argc, char** argv)
+DDSBroker::DDSBroker()
 {
   //create a default participant
-  domain = 0;
-  dpf = TheParticipantFactoryWithArgs(argc, argv);
+  domain = DDS::DOMAIN_ID_DEFAULT;
+  dpf = DomainParticipantFactory::get_instance();
   ROS_ASSERT_MSG(dpf.in(), "[DDS] Failed to get DDS factory.");
-  participant = dpf->create_participant(domain, PARTICIPANT_QOS_DEFAULT, NULL, OpenDDS::DCPS::DEFAULT_STATUS_MASK);
+  participant = dpf->create_participant(domain, PARTICIPANT_QOS_DEFAULT, NULL, STATUS_MASK_NONE);
   ROS_ASSERT_MSG(participant.in(), "[DDS] Failed to create DDS participant.");
 
   //register the default ROSDDS message type
-  ROSDDS::MsgTypeSupport_var mt = new ROSDDS::MsgTypeSupportImpl();
-  type_name = mt->get_type_name();
+  MsgTypeSupport_var mt = new MsgTypeSupport();
+  typeName = mt->get_type_name();
   DDS::ReturnCode_t status;
-  status = mt->register_type(participant.in(), type_name);
+  status = mt->register_type(participant.in(), typeName);
   ROS_ASSERT_MSG(status == DDS::RETCODE_OK, "[DDS] Failed to register DDS datatype");
 
   ROS_INFO("[DDS] DDS Ready!");
@@ -419,7 +416,7 @@ DDSBroker::~DDSBroker()
   DDS::ReturnCode_t status;
 
   //clear up, delete all writers, readers and topics
-  /*std::map<std::string, DataWriter_var>::iterator iterWriterMap;
+  std::map<std::string, DataWriter_var>::iterator iterWriterMap;
   for (iterWriterMap = writer_map.begin(); iterWriterMap != writer_map.end(); iterWriterMap++)
   {
     status = publisher->delete_datawriter(iterWriterMap->second);
@@ -445,14 +442,14 @@ DDSBroker::~DDSBroker()
   }
 
   //delete the default publisher, subscriber and participant
-  if (!CORBA::is_nil(publisher))
+  if (!DDS::is_nil(publisher))
   {
     status = participant->delete_publisher(publisher.in());
     if (status != DDS::RETCODE_OK)
       ROS_WARN("[DDS] Failed to delete DDS publisher (%s).", RETCODE_DESC(status));
   }
 
-  if (!CORBA::is_nil(subscriber))
+  if (!DDS::is_nil(subscriber))
   {
     status = participant->delete_subscriber(subscriber);
     if (status != DDS::RETCODE_OK)
@@ -461,20 +458,7 @@ DDSBroker::~DDSBroker()
 
   status = dpf->delete_participant(participant.in());
   if (status != DDS::RETCODE_OK)
-    ROS_WARN("[DDS] Failed to delete DDS subscriber (%s).", RETCODE_DESC(status));*/
-
-  try {
-    if (!CORBA::is_nil (participant.in ())) {
-      participant->delete_contained_entities();
-    }
-    if (!CORBA::is_nil (dpf.in ())) {
-      dpf->delete_participant(participant.in ());
-    }
-  } catch (CORBA::Exception& e) {
-	ROS_ERROR("Exception caught in cleanup.");
-    ACE_OS::exit(1);
-  }
-  TheServiceParticipant->shutdown();
+    ROS_WARN("[DDS] Failed to delete DDS subscriber (%s).", RETCODE_DESC(status));
 }
 
 bool DDSBroker::publishMsg(std::string topicName, const ros::SerializedMessage& content)
@@ -485,16 +469,20 @@ bool DDSBroker::publishMsg(std::string topicName, const ros::SerializedMessage& 
     ROS_ERROR("[DDS] Failed to get writer on topic %s.", topicName.c_str());
     return false;
   }
-  ROSDDS::MsgDataWriter_var message_writer = ROSDDS::MsgDataWriter::_narrow(writer);
+  MsgDataWriter_var msgWriter = MsgDataWriter::_narrow(writer.in());
 
   //encapsulate a ros message into a dds message
   Msg msgInstance;
+  msgInstance.version = 1;
+  msgInstance.callerId = ros::this_node::getName().c_str();
+  for (int i = 0; i < 8; i++)
+    msgInstance.reserved[i] = '0';
   unsigned int bufsize = content.num_bytes;
 
   msgInstance.message.replace(bufsize, bufsize, (unsigned char*)content.buf.get(), false);
 
   DDS::ReturnCode_t status;
-  status = message_writer->write(msgInstance, DDS::HANDLE_NIL);
+  status = msgWriter->write(msgInstance, DDS::HANDLE_NIL);
   if (status != DDS::RETCODE_OK)
   {
     ROS_ERROR("[DDS] Failed to write a message with len %d on topic %s (%s).", bufsize, topicName.c_str(),

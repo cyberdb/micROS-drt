@@ -376,7 +376,7 @@ public:
    */
   Publisher advertise(AdvertiseOptions& ops);
 
-  template<class M>//添加
+  template<class M>
     Publisher advertiseWithQoS(const std::string& topic, uint32_t queue_size, TransportPriority priority, bool latch =
                                    false)
     {
@@ -870,7 +870,7 @@ public:
    *  \throws InvalidNameException If the topic name begins with a tilde, or is an otherwise invalid graph resource name
    *  \throws ConflictingSubscriptionException If this node is already subscribed to the same topic with a different datatype
    */
-  Subscriber subscribe(SubscribeOptions& ops);//添加
+  Subscriber subscribe(SubscribeOptions& ops);
 
   template<class M, class T>
     Subscriber subscribeWithQoS(const std::string& topic, uint32_t queue_size, SubscribeQoSOptions& qos_ops,

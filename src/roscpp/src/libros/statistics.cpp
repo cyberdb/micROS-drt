@@ -73,7 +73,7 @@ void StatisticsLogger::callback(const boost::shared_ptr<M_string>& connection_he
   {
     // this is the first time, we received something on this connection
     stats.stat_bytes_last = 0;
-    stats.dropped_msgs = 0;//少stats.last_seq = 0;
+    stats.dropped_msgs = 0;
     stats.last_publish = ros::Time::now();
     map_[callerid] = stats;
   }
@@ -119,7 +119,7 @@ void StatisticsLogger::callback(const boost::shared_ptr<M_string>& connection_he
     msg.node_pub = callerid;
     msg.node_sub = ros::this_node::getName();
     msg.window_start = window_start;
-    msg.window_stop = received_time;//少msg.delivered_msgs = stats.arrival_time_list.size();
+    msg.window_stop = received_time;
     msg.dropped_msgs = stats.dropped_msgs;
     msg.traffic = bytes_sent - stats.stat_bytes_last;
 

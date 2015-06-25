@@ -526,7 +526,7 @@ void Subscription::pendingConnectionDone(const PendingConnectionPtr& conn, XmlRp
   }
 
   std::string proto_name = proto[0];
-  if (proto_name == "DDSROS")//添加
+  if (proto_name == "DDSROS")
   {
     if (proto.size() != 4 || proto[1].getType() != XmlRpcValue::TypeString
         || proto[2].getType() != XmlRpcValue::TypeString || proto[3].getType() != XmlRpcValue::TypeString)
@@ -743,7 +743,7 @@ uint32_t Subscription::handleMessage(const SerializedMessage& m, bool ser, bool 
   return drops;
 }
 
-uint32_t Subscription::handleMessage(const SerializedMessage& m, std::string caller_id)//添加
+uint32_t Subscription::handleMessage(const SerializedMessage& m, std::string caller_id)
 {
   boost::mutex::scoped_lock lock(callbacks_mutex_);
 
