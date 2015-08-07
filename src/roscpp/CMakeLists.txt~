@@ -17,8 +17,8 @@ list(GET roscpp_VERSION_LIST 1 roscpp_VERSION_MINOR)
 list(GET roscpp_VERSION_LIST 2 roscpp_VERSION_PATCH)
 
 # set DDS VENDOR
-option(USE_OPENSPLICE_DDS "Using OpenSplice DDS" ON)
-option(USE_OPENDDS "Using OpenDDS" OFF)
+option(USE_OPENSPLICE_DDS "Using OpenSplice DDS" OFF)
+option(USE_OPENDDS "Using OpenDDS" ON)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ros/common.h.in ${CATKIN_DEVEL_PREFIX}/${CATKIN_GLOBAL_INCLUDE_DESTINATION}/ros/common.h)
 

@@ -1,6 +1,6 @@
 /*
 *
-* Copyright (c) 2014
+* Copyright (c) 2014-2015
 *
 * micROS Team, http://micros.nudt.edu.cn
 * National University of Defense Technology
@@ -47,7 +47,7 @@ extern std::string RetCodeName[13];
 
 std::string dds2rosName(CORBA::String_var ddsName);
 
-void DDSListener::on_data_available(DDS::DataReader_ptr reader) 
+void DDSListener::on_data_available(DDS::DataReader_ptr reader) THROW_ORB_EXCEPTIONS
 {
   DDS::ReturnCode_t status;
   MsgSeq msgList;
@@ -67,23 +67,25 @@ void DDSListener::on_data_available(DDS::DataReader_ptr reader)
   }
   for (CORBA::ULong j = 0; j < msgList.length(); j++)
   {
-    /*if (strlen(msgList[j].callerId.in()) == 0)
+    int msgLen = msgList[j].message.length();
+    if (msgLen == 0)
     {
       //TODO: Why?
       std::string msg = std::string("DDS Service Info: A publisher on topic [") + topicName + std::string("] disappeared.");
       ROS_WARN("%s", msg.c_str());
     }
     else
-    {*/
-      int msgLen = msgList[j].message.length();
+    {
       boost::shared_array<uint8_t> buf(new uint8_t[msgLen]);
 
       memcpy(buf.get(), msgList[j].message.get_buffer(), msgLen);
       ros::SerializedMessage m(buf, msgLen);
-      //ignore the message length (32bit word)
-      //m.message_start = buf.get() + 4;
+#ifdef USE_OPENSPLICE_DDS
+      //TODO: Why?
+      m.message_start = buf.get() + 4;
+#endif
       subscription_->handleMessage(m, std::string("unknown_publisher"));
-    //}
+    }
   }
   status = msgReader->return_loan(msgList, infoSeq);
   if (status != DDS::RETCODE_OK)

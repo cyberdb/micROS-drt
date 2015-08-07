@@ -745,7 +745,6 @@ ROSDDS::MsgDataReaderView_impl::lookup_instance(
 
 
 const char * ::ROSDDS::MsgTypeSupport::metaDescriptor[] = {"<MetaData version=\"1.0.0\"><Module name=\"ROSDDS\"><TypeDef name=\"OctSeq\"><Sequence><Octet/></Sequence>",
-"</TypeDef><Struct name=\"Msg\"><Member name=\"version\"><ULong/></Member><Member name=\"callerId\"><String/>",
-"</Member><Member name=\"reserved\"><Array size=\"8\"><Octet/></Array></Member><Member name=\"message\">",
-"<Type name=\"OctSeq\"/></Member></Struct></Module></MetaData>"};
-const ::DDS::ULong (::ROSDDS::MsgTypeSupport::metaDescriptorArrLength) = 4;
+"</TypeDef><Struct name=\"Msg\"><Member name=\"message\"><Type name=\"OctSeq\"/></Member></Struct></Module>",
+"</MetaData>"};
+const ::DDS::ULong (::ROSDDS::MsgTypeSupport::metaDescriptorArrLength) = 3;

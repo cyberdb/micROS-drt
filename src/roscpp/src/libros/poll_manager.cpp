@@ -49,7 +49,8 @@ const PollManagerPtr& PollManager::instance()
   return g_poll_manager;
 }
 
-PollManager::PollManager()//少: shutting_down_(false)
+PollManager::PollManager()
+	: shutting_down_(false)
 {
 }
 

@@ -4,7 +4,7 @@
 //  
 //  File name: dds_message.h
 //  Source: dds_message.idl
-//  Generated: Sun Aug 24 02:45:11 2014
+//  Generated: Wed Aug  5 20:37:35 2015
 //  OpenSplice V6.4.140407OSS
 //  
 //******************************************************************
@@ -25,32 +25,12 @@ namespace ROSDDS
 
    struct Msg
    {
-         typedef DDS::Octet _reserved_slice;
-         typedef DDS::Octet _reserved[8];
-         typedef _reserved _reserved_out;
-         static _reserved_slice * _reserved_alloc ();
-         static void _reserved_free (_reserved_slice *);
-         static void _reserved_copy (_reserved_slice* to, const _reserved_slice* from);
-         static _reserved_slice *_reserved_dup (const _reserved_slice* from);
-
-         struct _reserved_uniq_ {};
-         typedef DDS_DCPS_FArray_var< _reserved, _reserved_slice, struct _reserved_uniq_> _reserved_var;
-         typedef DDS_DCPS_Array_forany< _reserved, _reserved_slice, struct _reserved_uniq_> _reserved_forany;
-         DDS::ULong version;
-         DDS::String_mgr callerId;
-         _reserved reserved;
          OctSeq message;
    };
 
    typedef DDS_DCPSStruct_var < Msg> Msg_var;
    typedef DDS_DCPSStruct_out < Msg> Msg_out;
 }
-template <>
-ROSDDS::Msg::_reserved_slice* DDS_DCPS_ArrayHelper < ROSDDS::Msg::_reserved, ROSDDS::Msg::_reserved_slice, ROSDDS::Msg::_reserved_uniq_>::alloc ();
-template <>
-void DDS_DCPS_ArrayHelper < ROSDDS::Msg::_reserved, ROSDDS::Msg::_reserved_slice, ROSDDS::Msg::_reserved_uniq_>::copy (ROSDDS::Msg::_reserved_slice *to, const ROSDDS::Msg::_reserved_slice* from);
-template <>
-void DDS_DCPS_ArrayHelper < ROSDDS::Msg::_reserved, ROSDDS::Msg::_reserved_slice, ROSDDS::Msg::_reserved_uniq_>::free (ROSDDS::Msg::_reserved_slice *ptr);
 
 
 

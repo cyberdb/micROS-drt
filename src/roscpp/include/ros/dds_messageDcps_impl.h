@@ -2,7 +2,7 @@
 #define DDS_MESSAGEDCPS_IMPL_H_
 
 #include "ccpp.h"
-#include "ccpp_dds_message.h"
+#include "ros/ccpp_dds_message.h"
 #include "ccpp_TypeSupport_impl.h"
 #include "ccpp_DataWriter_impl.h"
 #include "ccpp_DataReader_impl.h"

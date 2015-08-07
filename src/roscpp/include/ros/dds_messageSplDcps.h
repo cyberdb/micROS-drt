@@ -1,7 +1,7 @@
 #ifndef DDS_MESSAGESPLTYPES_H
 #define DDS_MESSAGESPLTYPES_H
 
-#include "ccpp_dds_message.h"
+#include "ros/ccpp_dds_message.h"
 
 #include <c_base.h>
 #include <c_misc.h>
@@ -21,9 +21,6 @@ struct _ROSDDS_Msg ;
 extern  c_bool __ROSDDS_Msg__copyIn(c_base base, struct ROSDDS::Msg *from, struct _ROSDDS_Msg *to);
 extern  void __ROSDDS_Msg__copyOut(void *_from, void *_to);
 struct _ROSDDS_Msg {
-    c_ulong version;
-    c_string callerId;
-    c_octet reserved[8];
     _ROSDDS_OctSeq message;
 };
 

@@ -4,7 +4,7 @@
 //  
 //  File name: dds_messageDcps.h
 //  Source: dds_messageDcps.idl
-//  Generated: Sun Aug 24 02:45:11 2014
+//  Generated: Wed Aug  5 20:37:35 2015
 //  OpenSplice V6.4.140407OSS
 //  
 //******************************************************************
@@ -14,7 +14,7 @@
 #include "sacpp_mapping.h"
 #include "sacpp_DDS_DCPS.h"
 #include "dds_dcps.h"
-#include "dds_message.h"
+#include "ros/dds_message.h"
 
 
 namespace ROSDDS
