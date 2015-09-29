@@ -1,9 +1,9 @@
-micROS-RT v0.30
+micROS-drt v0.30
 =========
 
 ###Introduction
 
-micROS RT (micROS Real-Time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Service for Real-time Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (http://portals.omg.org/dds/). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. By replacing the original ROS message protocols (TCPROS & UDPROS) with DDS, a set of advanced features can be supported in the ROS message delivery process.
+micROS drt (micROS distributed real-time) is a modified ROS C++ kernel which adopts OMG's DDS (Data Distribution Service for Real-time Systems) as its underlying message transfer protocol. DDS is an Object Management Group's standard for pub/sub middleware (http://portals.omg.org/dds/). It supports high-performance, scalable and QoS-assuring message delivery. It has been applied into many industry-level systems. By replacing the original ROS message protocols (TCPROS & UDPROS) with DDS, a set of advanced features can be supported in the ROS message delivery process.
 
 (1) **Built-in multicast support**. When there are _n_ listeners in a topic (_n_>=2), significant performance advantage can be obtained.
 
@@ -16,6 +16,12 @@ Existing ROS packages can easily benefit from feature 1 and 2. No modification/r
 Please contact us through [bding@msn.com](mailto:bding@msn.com). Any feedback would be greatly appreciated.
 
 ###Release Notes
+
+v0.30(2015-09-30)
+
+1) Supporting both OpenSplice DDS and OpenDDS
+
+2) Bug fix
 
 v0.21(2015-01-11)
 
